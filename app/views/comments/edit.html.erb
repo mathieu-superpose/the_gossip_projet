@@ -1,0 +1,13 @@
+  <h3>Éditer le commentaire</h3>
+  <hr>
+  <%= form_tag gossip_comment_path(params[:gossip_id], params[:id]), method: "put" do %>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <div class = "form-group">
+    <%= label_tag 'Commentaire' %>
+    <%= text_field_tag 'content', @comment.content, class:"form-control" %>
+  </div>
+
+  <%= submit_tag "Commenter", class:"btn btn-primary"%>
+
+  <% end %>

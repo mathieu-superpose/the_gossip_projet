@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Gossip Project</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-3">
+                <div class="card border-success mb-5" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <h4 class="card-text pl-4 small">Potin
+                            <%=  @gossip.id %>:</h4>
+                        <p class="h3 card-text pl-4">
+                            <%=  @gossip.title  %>
+                        </p>
+                        <h5 class="card-text small pl-4">Le
+                            <%=  @gossip.created_at.strftime("%m.%d.%Y") %>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <%=  @gossip.content %>
+                        </p>
+                        <p class="text-right">
+                            <%= link_to @gossip.user.first_name , profile_path(:id => @gossip.user.id)%>
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <div>
+                            <% if @gossip.user == current_user %>
+                            <%= link_to 'Editer', edit_gossip_path(:id => @gossip.id), :class => "btn btn-secondary", style:"font-size:smaller"%>
+                            <td>
+                                <%= link_to 'Supprimer', @gossip, method: :delete, data: { confirm: "Es-tu certain?" }, :class => "btn btn-secondary", style:"font-size:smaller" %>
+                            </td>
+                            <% end %>
+                            <% if @gossip.user != current_user %>
+                            <div>
+                                <a class="card-text">Likes:
+                                    <%=  @gossip.likes.count %></a>
+                                <div class="pl-3 d-inline" onmouseover="this.style.opacity = '0.5'" onmouseout="this.style.opacity = '1'">
+                                    <%= link_to gossip_likes_path(@gossip), method: :post do %>
+                                    <%= image_tag "thumb.png", width: 37, height: 37
+%>
+                                    <% end %>
+                                </div>
+                                <%end%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <img class="rounded-circle img-fluid ml-5 mt-3" alt="profile pic" src="<%= asset_path('bouche2.png') %>" style="height:300px;width:300px">
+            </div>
+        </div>
+        <div class="comment-form">
+            <%= render 'comments/form' %>
+        </div>
+        <!-- List gossip -->
+        <h3 class="mt-4 mb-4">Commentaires:
+            <%=  @gossip.comments.count%>
+        </h3>
+        <% @gossip.comments.each do |comment|%>
+        <div class="row my-3 ">
+            <div class="col-md-12">
+                <div class="card border-success d-flex align-content-around flex-wrap py-2" align="center">
+                    <div class="row">
+                        Auteur:
+                        <%=comment.user.first_name%> <br>
+                        Content:
+                        <%=comment.content%>
+                    </div>
+                    <div class="row">
+                        <%= link_to "Editer", edit_gossip_comment_path(@gossip.id, comment.id), class: "btn btn-secondary pl-2 ml-5 mx-2", style:"font-size:smaller"%>
+                        <a href="/gossips/<%= @gossip.id %>/comments/<%= comment.id %>" class="btn btn-danger mr-1" style="font-size:smaller" data-confirm="Etes-vous sûr ?" data-method="DELETE">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%end%>
+    </div>
+</body>
+
+</html>

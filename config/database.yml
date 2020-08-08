@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: the_gossip_project_views_development
+
+test:
+  <<: *default
+  database: the_gossip_project_views_test
+
+production:
+  <<: *default
+  database: the_gossip_project_views_production
+  username: the_gossip_project_views
+  password: <%= ENV['THE_GOSSIP_PROJECT_VIEWS_DATABASE_PASSWORD'] %>

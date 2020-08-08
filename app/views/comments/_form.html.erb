@@ -1,0 +1,14 @@
+<div class="container mt-1 form-group">
+  <%= form_tag gossip_comments_path(@gossip), method: "post" do %>
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <br />
+
+  <%= text_field_tag 'content', @comment.content, class:"form-control border-success", style:"height:100px;", placeholder:"Nouveau commentaire" %>
+ 
+  <br />
+
+  <%= submit_tag "Enregistrer", class:"btn btn-secondary", style:"font-size:smaller"%>
+
+  <% end %>
+</div>
