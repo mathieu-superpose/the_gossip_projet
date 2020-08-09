@@ -50,9 +50,4 @@ class CommentsController < ApplicationController
     redirect_to gossip_path(@gossip.id)
   end 
 
-
-
-
-
-
 end
