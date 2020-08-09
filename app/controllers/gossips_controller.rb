@@ -57,6 +57,7 @@ class GossipsController < ApplicationController
 
   
   def require_author
+    @gossip = Gossip.find(params[:id])
     redirect_to login_path unless @gossip.user == current_user
   end
 
