@@ -32,4 +32,46 @@ for i in (0..9)
   cities << city
 end
 
+10.times do
+  user = User.create(
+    password: "foobar",
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    description: Faker::Lorem.sentence(word_count: 10, supplemental: true, random_words_to_add: 10),
+    email: Faker::Internet.email,
+    age: rand(18..75),
+    city_id: cities[rand(0..9)].id,
+  )
+  users << user
+end
 
+  20.times do
+    gossip = Gossip.create(
+      title: Faker::Movie.title,
+      content: Faker::Quote.famous_last_words,
+      user_id: users[rand(0..9)].id,
+    )
+    gossips << gossip
+  end
+
+  10.times do
+    tag = Tag.create(
+      title: "#" + Faker::Dessert.variety.delete(' '),
+    )
+    tags << tag
+  end
+
+  30.times do
+    gossip_tag = GossipTag.create(
+      tag_id: tags[rand(0..9)].id,
+      gossip_id: gossips[rand(0..19)].id,
+    )
+  end
+
+  15.times do
+    private_message = PrivateMessage.create(
+      recipient_id: users[rand(0..9)].id,
+      sender_id: users[rand(0..9)].id,
+      content: Faker::Movie.quote,
+    )
+  end
